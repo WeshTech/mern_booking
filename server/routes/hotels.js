@@ -14,10 +14,10 @@ router.put("/:id", verifyAdmin, updateHotel);
 router.delete("/:id",verifyAdmin, deleteHotel);
 
 //get a single hotel
-router.get("/find/:id",verifyUser, getHotel);
+router.get("/find/:id", getHotel);
 
 //get all hotels
-router.get("/",verifyUser, getHotels);
+router.get("/", getHotels);
 
 
 export default router;
