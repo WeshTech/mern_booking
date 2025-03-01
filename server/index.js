@@ -1,6 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import authRoute from './routes/auth.js';
+import usersRoute from './routes/users.js';
+import hotelsRoute from './routes/hotels.js';
+import roomsRoute from './routes/rooms.js';
 
 const app = express();
 dotenv.config();
@@ -14,20 +18,23 @@ try {
 } catch (error) {
     throw error;
 }
+
+
+mongoose.connection.on("disconnected", () => {
+    console.log("DB connection Terminated");
+});
 };
 
 mongoose.connection.on("connected", () => {
     console.log("MongoDB connected!");
 });
 
-mongoose.connection.on("disconnected", () => {
-    console.log("DB connection Terminated");
-});
 
-
-app.get('/', (req, res) => {
-    res.status(200).send("Fuck you");
-})
+//middleware
+app.use('/api/auth', authRoute);
+app.use('/api/users', usersRoute);
+app.use('/api/hotels', hotelsRoute);
+app.use('/api/rooms', roomsRoute);
 
 
 app.listen(PORT, () => {
