@@ -31,6 +31,7 @@ mongoose.connection.on("connected", () => {
     console.log("MongoDB connected!");
 });
 
+
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
