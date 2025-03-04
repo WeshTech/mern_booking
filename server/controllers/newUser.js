@@ -47,13 +47,14 @@ export const loginUser = async(req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({ message: "Invalid Credentials" });
         }
+        
 
         //store userid in the session
         req.session.userId = user._id;
 
         //generate a jwt for the sessionID
         const token = jwt.sign(
-            { sessionID: req.sessionID },
+            { sessionID: req.sessionID, userId: user._id },
             process.env.JWT_SECRET,
             { expiresIn: "1d" }
         );
@@ -62,7 +63,8 @@ export const loginUser = async(req, res) => {
         res.cookie("accessToken", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            maxAge: 1000 * 60 * 60 * 24
+            maxAge: 1000 * 60 * 60 * 24,
+            sameSite: "Strict"
         });
 
         res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } })
