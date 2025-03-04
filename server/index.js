@@ -5,12 +5,14 @@ import authRoute from './routes/auth.js';
 import usersRoute from './routes/users.js';
 import hotelsRoute from './routes/hotels.js';
 import roomsRoute from './routes/rooms.js';
+import greetingsRoute from "./routes/greet.js";
+import registrationRoute from "./routes/register.js";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 
 const app = express();
 dotenv.config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 const connectionString = process.env.MONGODB_URL;
 
 const connect = async() => {
@@ -41,6 +43,8 @@ app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/hotels', hotelsRoute);
 app.use('/api/rooms', roomsRoute);
+app.use('/api/greet', greetingsRoute);
+app.use('/api/newuser', registrationRoute);
 
 
 //error handler middleware
