@@ -10,12 +10,15 @@ export const registration = async (req, res) => {
         const existingUser = await NewUser.findOne({ email });
         if (existingUser) return res.status(400).json({ message: "Email is already taken" });
 
+        //normalize the email
+        const normalizedEmail = email.toLowerCase();
+
         //hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         //create the user
-        const newUser = NewUser({ username, email, password: hashedPassword });
+        const newUser = NewUser({ username, email: normalizedEmail, password: hashedPassword });
         await newUser.save();
 
         //remove the password in the return data
@@ -67,4 +70,4 @@ export const loginUser = async(req, res) => {
         console.log(err);
         res.status(500).json({ message: "Something went wrong!" });
     }
-}
+};
