@@ -44,7 +44,7 @@ app.use('/api/users', usersRoute);
 app.use('/api/hotels', hotelsRoute);
 app.use('/api/rooms', roomsRoute);
 app.use('/api/greet', greetingsRoute);
-app.use('/api/newuser', registrationRoute);
+app.use('/api/user', registrationRoute);
 
 
 //error handler middleware
