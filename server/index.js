@@ -9,6 +9,8 @@ import greetingsRoute from "./routes/greet.js";
 import registrationRoute from "./routes/register.js";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
+import MongoStore from "connect-mongo";
+import session from "express-session";
 
 const app = express();
 dotenv.config();
@@ -37,6 +39,25 @@ mongoose.connection.on("connected", () => {
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+
+
+//express-session configuration
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: connectionString,
+        ttl: 24 * 60 * 60,
+    }),
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 1000 * 60 * 60 * 24,
+        sameSite: "strict"
+    }
+}))
+
 
 //middleware
 app.use('/api/auth', authRoute);

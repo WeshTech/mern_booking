@@ -1,10 +1,13 @@
 import express from "express";
-import { validateRegistration } from "../utils/validator.js";
-import { registration } from "../controllers/newUser.js";
+import { validateLogin, validateRegistration } from "../utils/validator.js";
+import { loginUser, registration } from "../controllers/newUser.js";
 
 const router = express.Router();
 
-//new user using express-session mngt
+//new user using mngt
 router.post("/register", validateRegistration, registration);
+
+//login process
+router.post("/login", validateLogin, loginUser);
 
 export default router;

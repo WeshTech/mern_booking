@@ -23,4 +23,23 @@ export const validateRegistration = [
         }
         next();
     }
+];
+
+//logic to validate the login details
+export const validateLogin = [
+    body("email")
+        .trim()
+        .notEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Please provide a valid email"),
+    body("password")
+        .trim()
+        .notEmpty().withMessage("Password is required"),
+    
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        next();
+    }
 ]
