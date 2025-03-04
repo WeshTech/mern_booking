@@ -81,6 +81,11 @@ app.use((err, req, res, next) => {
 });
 
 
+app.get("/", (req, res) => {
+    res.status(200).send("Hello there,,, How are you doing!!");
+})
+
+
 app.listen(PORT, () => {
     connect();
     console.log(`The server is listening on port ${PORT}`);
